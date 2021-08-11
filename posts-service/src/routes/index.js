@@ -30,4 +30,10 @@ routes.get('/posts', (req, res) => {
   return res.json(posts);
 })
 
+routes.post('/events', (req, res) => {
+  console.log('Event Received: ', req.body);
+
+  return res.send();
+})
+
 module.exports = { routes }
