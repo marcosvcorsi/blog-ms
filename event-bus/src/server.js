@@ -5,8 +5,16 @@ const app = express();
 
 app.use(express.json())
 
+const events = [];
+
+app.get('/events', (req, res) => {
+  return res.send(events);
+})
+
 app.post('/events', async (req, res) => {
   const event = req.body;
+
+  events.push(event);
 
   const servicesPorts =  [4000, 4001, 4002, 4003, 4004];
 

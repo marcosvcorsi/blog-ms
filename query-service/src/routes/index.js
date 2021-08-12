@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const axios = require('axios');
 
 const routes = Router();
 
@@ -8,9 +9,7 @@ routes.get('/posts', (req, res) => {
   return res.send(posts);
 })
 
-routes.post('/events', (req, res) => {
-  const event = req.body;
-
+const handleEvents = (event) => {
   if (event.type === 'PostCreated') {
     const post = posts.find(post => post.id === event.data.id);
 
@@ -42,8 +41,32 @@ routes.post('/events', (req, res) => {
       }
     }
   }
+}
+
+routes.post('/events', (req, res) => {
+  const event = req.body;
+
+  console.log('event received', event);
+
+  handleEvents(event);
 
   return res.send();
 })
+
+const syncEvents = async () => {
+  console.log('sync events');
+
+  const { data } = await axios.get('http://localhost:4005/events');
+
+  console.log('data received', data);
+
+  for(const event of data) {
+    console.log('handle event', event);
+
+    handleEvents(event);
+  }
+}
+
+syncEvents();
 
 module.exports = { routes }
