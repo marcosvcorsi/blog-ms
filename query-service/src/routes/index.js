@@ -31,6 +31,18 @@ routes.post('/events', (req, res) => {
     }
   }
 
+  if(event.type === 'CommentUpdated') {
+    const post = posts.find(post => post.id === event.data.postId);
+
+    if (post) {
+      const commentIndex = post.comments.findIndex(comment => comment.id === event.data.id);
+
+      if (commentIndex !== -1) {
+        post.comments[commentIndex] = event.data;
+      }
+    }
+  }
+
   return res.send();
 })
 
