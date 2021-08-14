@@ -11,24 +11,45 @@ app.get('/events', (req, res) => {
   return res.send(events);
 })
 
+const services = [
+  {
+    service: 'posts-clusterip-service',
+    port: 4000,
+  },
+  {
+    service: 'localhost',
+    port: 4001,
+  },
+  {
+    service: 'localhost',
+    port: 4002,
+  },
+  {
+    service: 'localhost',
+    port: 4003,
+  },
+  {
+    service: 'localhost',
+    port: 4004,
+  }
+]
+
 app.post('/events', async (req, res) => {
   const event = req.body;
 
   events.push(event);
 
-  const servicesPorts =  [4000, 4001, 4002, 4003, 4004];
-
-  const results = await Promise.allSettled(servicesPorts.map(port => axios.post(`http://localhost:${port}/events`, event)));
+  const results = await Promise.allSettled(services.map(({ service, port }) => axios.post(`http://${service}:${port}/events`, event)));
 
   results.forEach((result, index) => {
-    const { status, reason } = result;
+    const { status } = result;
 
-    const port = servicesPorts[index];
+    const { service, port } = services[index];
 
     if(status === 'fulfilled') {
-      console.log(`Event publish at ${port}`)
+      console.log(`Event publish at ${service}:${port}`)
     } else {
-      console.log(`Event error at ${port}`, reason)
+      console.log(`Event error at ${service}:${port}`)
     }
   });
 
