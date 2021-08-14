@@ -17,11 +17,11 @@ const services = [
     port: 4000,
   },
   {
-    service: 'localhost',
+    service: 'comments-service',
     port: 4001,
   },
   {
-    service: 'localhost',
+    service: 'query-service',
     port: 4002,
   },
   {
@@ -29,7 +29,7 @@ const services = [
     port: 4003,
   },
   {
-    service: 'localhost',
+    service: 'moderation-service',
     port: 4004,
   }
 ]
