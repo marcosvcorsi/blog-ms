@@ -25,7 +25,7 @@ routes.post('/posts/:id/comments', async (req, res) => {
 
   commentsByPostId[postId] = comments;
 
-  await axios.post('http://localhost:4005/events', {
+  await axios.post('http://event-bus-service:4005/events', {
     type: 'CommentCreated',
     data: comment,
   }).then(() => console.log('CommentCreated sent'));
@@ -54,7 +54,7 @@ routes.post('/events', async (req, res) => {
     if (commentIndex !== -1) {
       comments[commentIndex] = event.data;
 
-      await axios.post('http://localhost:4005/events', {
+      await axios.post('http://event-bus-service:4005/events', {
         type: 'CommentUpdated',
         data: comments[commentIndex],
       }).then(() => console.log('CommentUpdated sent'));

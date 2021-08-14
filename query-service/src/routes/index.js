@@ -56,7 +56,7 @@ routes.post('/events', (req, res) => {
 const syncEvents = async () => {
   console.log('sync events');
 
-  const { data } = await axios.get('http://localhost:4005/events');
+  const { data } = await axios.get('http://event-bus-service:4005/events');
 
   console.log('data received', data);
 
