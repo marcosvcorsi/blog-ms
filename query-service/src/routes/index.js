@@ -5,7 +5,7 @@ const routes = Router();
 
 const posts = [];
 
-routes.get('/posts', (req, res) => {
+routes.get('/posts/query', (req, res) => {
   return res.send(posts);
 })
 
