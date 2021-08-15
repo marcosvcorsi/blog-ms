@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/events', async (req, res) => {
-  console.log('event received');
+  console.log('event received', req.body);
 
   const event = req.body;
   const { type, data } = event;
